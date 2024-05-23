@@ -1,0 +1,61 @@
+{% extends './base.twig' %}
+{% set title = 'Módulo de Pedidos'%}
+{% block title %} {{ title }} {% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/js/pages/form_elements.js') }}"></script>
+    <script src="{{ asset('assets/js/functions.js') }}"></script>
+    <script src="{{ asset('assets/js/custom.js') }}"></script>
+{% endblock %}
+
+{% block stylesheet %} {% endblock %}
+
+{% block content %}
+<main class="mn-inner">
+    <div class="row">
+        <div class="col s12">
+            <div class="page-title">{{ title }}</div>
+        </div>
+        <div class="col s12 m12 l12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="row">
+                    {% if order %}
+                        <span class="card-title">Editar pedido</span><br>
+                        <form id="FormX" method="post" action="{{ path('orders_edit', {'id': order.id}) }}" class="col s12">
+                    {% else %}
+                        <span class="card-title">Novo pedido</span><br>
+                        <form id="FormX" method="post" action="{{ path('orders_create') }}" class="col s12">
+                    {% endif %}
+                        <div class="input-field col s4">
+                            <select id="user_id" name="user_id">
+                                <option value="" disabled selected>Selecione abaixo</option>
+                                {% for itens in clientes %}
+                                <option value="{{ itens.id }}" {% if order.user.id == itens.id %}selected{% endif %}>{{ itens.document }} - {{ itens.first_name }} {{ itens.last_name }}</option>
+                                {% endfor %}
+                            </select>
+                            <label>Selecione o Cliente</label>
+                        </div>
+                        <div class="input-field col s12">
+                            <input id="description" name="description" type="text" value="{{ order.description }}" class="validate">
+                            <label for="description">Descrição de item</label>
+                        </div>
+                        <div class="input-field col s2">
+                            <input id="quantity" name="quantity" value="{{ order.quantity }}" onkeypress="mascara(this, soNumeros);" maxlength="14" type="text" class="validate">
+                            <label for="quantity">Quantidade</label>
+                        </div>
+                        <div class="input-field col s3">
+                            <input id="price" name="price" value="{{ order.price }}" onkeypress="mascara(this, maskMonetario);" maxlength="15" type="tel" class="validate">
+                            <label for="price">Preço Unitário</label>
+                        </div>
+                        <div class="col s12 right-align m-t-sm">
+                            <a href="javascript:void(0);" id="btn-create-order" class="waves-effect waves-light btn teal">Salvar</a>
+                        </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

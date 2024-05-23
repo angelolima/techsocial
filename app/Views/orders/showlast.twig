@@ -1,0 +1,76 @@
+{% extends './base.twig' %}
+{% set title = 'Módulo de Pedidos'%}
+{% block title %} {{ title }} {% endblock %}
+
+{% block javascript %}
+    <script src="{{ asset('assets/plugins/waypoints/jquery.waypoints.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/counter-up-master/jquery.counterup.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/jquery-sparkline/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/chart.js/chart.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.time.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.symbol.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.resize.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/flot/jquery.flot.tooltip.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/curvedlines/curvedLines.js') }}"></script>
+    <script src="{{ asset('assets/plugins/peity/jquery.peity.min.js') }}"></script>
+    <script src="{{ asset('assets/js/pages/orders.js') }}"></script>
+{% endblock %}
+
+{% block stylesheet %}
+    <link href="{{ asset('assets/plugins/datatables/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main class="mn-inner">
+    <div class="row">
+        <div class="col s12">
+            <div class="page-title">{{ title }}</div>
+        </div>
+        
+        <div class="row no-m-t no-m-b">
+            <div class="col s12 m12 l12">
+                <div class="card invoices-card">
+                    <div class="card-content">
+                        <div class="card-options">
+                            <input type="text" class="expand-search" placeholder="Buscar Pedido" autocomplete="off">
+                        </div>
+                        <span class="card-title">Últimos Pedidos</span>
+                    <table class="responsive-table bordered">
+                        <thead>
+                            <tr>
+                                <th data-field="id">ID</th>
+                                <th data-field="number">Cliente</th>
+                                <th data-field="company">Documento</th>
+                                <th data-field="company">Pedido</th>
+                                <th data-field="date">Data do Pedido</th>
+                                <th data-field="company">Qtd</th>
+                                <th data-field="total">Valor Unit.</th>
+                                <th data-field="total">Total</th>
+                                <th data-field="progress">Processo</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for itens in orders %}
+                            <tr>
+                                <td>#{{ itens.id }}</td>
+                                <td>{{ itens.user.first_name ~' '~ itens.user.last_name}}</td>
+                                <td>{{ itens.user.document }}</td>
+                                <td>{{ itens.description}}</td>
+                                <td>{{ itens.use.createt_at|date('d/m/Y') }}</td>
+                                <td>{{ itens.quantity}}</td>
+                                <td>R$ {{ itens.price|number_format(2, ',', '.') }}</td>
+                                <td>R$ {{ (itens.price * itens.quantity)|number_format(2, ',', '.') }}</td>
+                                <td><span class="pie">3/8</span></td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
