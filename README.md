@@ -39,6 +39,7 @@ composer install
 Agora seu ambiente deve estar configurado e pronto para uso. Se você tiver qualquer dúvida ou encontrar problemas, sinta-se à vontade para abrir uma issue no repositório.
 
 ## Licença
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+Este projeto está licenciado sob a licença MIT. 
+Veja o arquivo LICENSE para mais detalhes.
 
 ### Obrigado por contribuir com o TechSocial!
